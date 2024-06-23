@@ -13,39 +13,7 @@ import SignupForm from '@/components/SignupForm';
 import SigninForm from '@/components/SigninForm';
 import { MenuIcon } from '@/components/ui/icons';
 
-const MobileMenu = ({ menuOpen, setMenuOpen, user, logout }) => (
-    <div className={`absolute top-16 right-0 bg-gray-900 w-64 flex flex-col items-start gap-4 p-4 z-50 ${menuOpen ? 'block' : 'hidden'}`}>
-        { user ?  (
-            <>
-                <Link href="/" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
-                    Mi cuenta
-                </Link>
-                <Link href="/servicios" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
-                    Servicios
-                </Link>
-                <Link href="#" className="hover:underline w-full text-left" prefetch={false} onClick={() => { setMenuOpen(false); logout(); }}>
-                Salir
-                </Link>
-            </>
-        ) : (
-            <>
-                <Link href="/" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
-                    Home
-                </Link>
-                <Link href="/servicios" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
-                    Servicios
-                </Link>
-                <Link href="about" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
-                Acerca de nosotros
-                </Link>
-                <Link href="#" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
-                    no logeado
-                </Link>
-             
-            </>
-        )}
-    </div>
-);
+
 
 const Header = () => {
     const { isAuthenticated, user, logout } = useAuth();
@@ -53,8 +21,7 @@ const Header = () => {
     const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
     const [isSigninModalOpen, setIsSigninModalOpen] = useState(false);
 
-    // useEffect para suscribirse a los cambios en isAuthenticated o user
-    useEffect(() => {    }, [isAuthenticated, user]);
+    useEffect(() => {}, [isAuthenticated, user]);
 
     return (
         <header className="bg-gray-900 text-white px-4 lg:px-6 py-4 flex items-center justify-between relative">
@@ -69,22 +36,21 @@ const Header = () => {
             <nav className="hidden lg:flex gap-6">
                 {isAuthenticated ? (
                     <>
-                      
                         <Link href="/" className="hover:underline" prefetch={false}>Inicio</Link>
                         <Link href="/servicios" className="hover:underline" prefetch={false}>Servicios</Link>
                         <Link href="#" className="hover:underline" prefetch={false}>Mis Publicacioines</Link>
-                        <Link href="#" className="hover:underline" prefetch={false}>Acerca de </Link>
+                        <Link href="#" className="hover:underline" prefetch={false}>Acerca de</Link>
                     </>
                 ) : (
                     <>
-                          <Link href="/" className="hover:underline" prefetch={false}>Inicio</Link>
-                          <Link href="/about" className="hover:underline" prefetch={false}>Sobre Nosostros</Link>
+                        <Link href="/" className="hover:underline" prefetch={false}>Inicio</Link>
+                        <Link href="/about" className="hover:underline" prefetch={false}>Sobre Nosotros</Link>
                     </>
                 )}
             </nav>
 
             <div className="flex gap-2">
-                {isAuthenticated ?   (
+                {isAuthenticated ? (
                     <div className="flex items-center gap-2">
                         <span>Bienvenido,</span>
                         <Button variant="outline" className="text-white hover:bg-white hover:text-gray-900" onClick={logout}>
@@ -115,15 +81,12 @@ const Header = () => {
                 </Button>
             </nav>
 
-            {/* Componente MobileMenu */}
-            <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} user={user} logout={logout} />
+            <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} isAuthenticated={isAuthenticated} user={user} logout={logout} />
 
-            {/* Modal para el formulario de registro */}
             {isSignupModalOpen && (
                 <SignupForm onClose={() => setIsSignupModalOpen(false)} />
             )}
 
-            {/* Modal para el formulario de inicio de sesión */}
             {isSigninModalOpen && (
                 <SigninForm onClose={() => setIsSigninModalOpen(false)} />
             )}
@@ -131,4 +94,38 @@ const Header = () => {
     );
 };
 
+
 export default Header;
+
+const MobileMenu = ({ menuOpen, setMenuOpen, isAuthenticated, user, logout }) => (
+    <div className={`absolute top-16 right-0 bg-gray-900 w-64 flex flex-col items-start gap-4 p-4 z-50 ${menuOpen ? 'block' : 'hidden'}`}>
+        {isAuthenticated ? (
+            <>
+                <Link href="/" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
+                    Mi cuenta
+                </Link>
+                <Link href="/servicios" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
+                    Servicios
+                </Link>
+                <Link href="#" className="hover:underline w-full text-left" prefetch={false} onClick={() => { setMenuOpen(false); logout(); }}>
+                    Salir
+                </Link>
+            </>
+        ) : (
+            <>
+                <Link href="/" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
+                    Home
+                </Link>
+                <Link href="/servicios" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
+                    Servicios
+                </Link>
+                <Link href="about" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
+                    Acerca de nosotros
+                </Link>
+                <Link href="#" className="hover:underline w-full text-left" prefetch={false} onClick={() => setMenuOpen(false)}>
+                    no logeado
+                </Link>
+            </>
+        )}
+    </div>
+);

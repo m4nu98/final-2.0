@@ -79,7 +79,7 @@ export default function Component() {
                 <p className="text-gray-500 dark:text-gray-400 text-center">
                   Our skilled plumbers can handle any plumbing issue, big or small.
                 </p>
-                <a href="/servicios" className="boton w-full max-w-md block text-center py-2 px-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600">
+                <a href="/servicios"  className="boton w-full max-w-md block text-center py-2 px-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600">
                   Hire Now
                 </a>
               </div>
